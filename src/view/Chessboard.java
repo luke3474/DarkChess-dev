@@ -17,11 +17,16 @@ import java.util.List;
  */
 public class Chessboard extends JComponent {
 
-
     private static final int ROW_SIZE = 8;
     private static final int COL_SIZE = 4;
     public static int scoreOfRed = 0;
     public static int scoreOfBlack = 0;
+
+    public static int redCan = 0; public static int redCha = 0; public static int redMan = 0; public static int redSol = 0;
+    public static int redKin = 0; public static int redEle = 0; public static int redHor = 0;
+
+    public static int blaCan = 0; public static int blaCha = 0; public static int blaMan = 0; public static int blaSol = 0;
+    public static int blaKin = 0; public static int blaEle = 0; public static int blaHor = 0;
 
     private static final SquareComponent[][] squareComponents = new SquareComponent[ROW_SIZE][COL_SIZE];
     private static ChessColor currentColor = ChessColor.RED;
@@ -78,23 +83,37 @@ public class Chessboard extends JComponent {
             if (chess2.getChessColor() == ChessColor.RED) {
                 if (chess2 instanceof CannonChessComponent || chess2 instanceof ChariotChessComponent || chess2 instanceof ElephantChessComponent || chess2 instanceof HorseChessComponent) {
                     scoreOfBlack += 5;
+                    if (chess2 instanceof CannonChessComponent){blaCan++;}
+                    if (chess2 instanceof ChariotChessComponent){blaCha++;}
+                    if (chess2 instanceof ElephantChessComponent){blaEle++;}
+                    if (chess2 instanceof HorseChessComponent){blaHor++;}
                 } else if (chess2 instanceof MandarinChessComponent) {
                     scoreOfBlack += 10;
+                    blaMan++;
                 } else if (chess2 instanceof SoldierChessComponent) {
                     scoreOfBlack += 2;
+                    blaSol++;
                 } else if (chess2 instanceof KingChessComponent) {
                     scoreOfBlack += 30;
+                    blaKin++;
                 }
             } //计分规则，黑方加分
             else if (chess2.getChessColor() == ChessColor.BLACK) {
                 if (chess2 instanceof CannonChessComponent || chess2 instanceof ChariotChessComponent || chess2 instanceof ElephantChessComponent || chess2 instanceof HorseChessComponent) {
                     scoreOfRed += 5;
+                    if (chess2 instanceof CannonChessComponent){redCan++;}
+                    if (chess2 instanceof ChariotChessComponent){redCha++;}
+                    if (chess2 instanceof ElephantChessComponent){redEle++;}
+                    if (chess2 instanceof HorseChessComponent){redHor++;}
                 } else if (chess2 instanceof MandarinChessComponent) {
                     scoreOfRed += 10;
+                    redMan++;
                 } else if (chess2 instanceof SoldierChessComponent) {
                     scoreOfRed += 2;
+                    redSol++;
                 } else if (chess2 instanceof KingChessComponent) {
                     scoreOfRed += 30;
+                    redKin++;
                 }
             } //计分规则，红方加分
             remove(chess2);
@@ -106,11 +125,27 @@ public class Chessboard extends JComponent {
         int row2 = chess2.getChessboardPoint().getX(), col2 = chess2.getChessboardPoint().getY();
         squareComponents[row2][col2] = chess2;
 
-        //只重新绘制chess1 chess2，其他不变
+        //只重新绘制chess1 chess2，其他不变z
         chess1.repaint();
         chess2.repaint();
         ChessGameFrame.getBlackScore().setText("BLACK:" + scoreOfBlack);
         ChessGameFrame.getRedScore().setText("RED:" + scoreOfRed);
+
+        ChessGameFrame.num1(redKin).setText(Integer.toString(redKin));
+        ChessGameFrame.num2(redCan).setText(Integer.toString(redCan));
+        ChessGameFrame.num3(redCha).setText(Integer.toString(redCha));
+        ChessGameFrame.num4(redHor).setText(Integer.toString(redHor));
+        ChessGameFrame.num5(redMan).setText(Integer.toString(redMan));
+        ChessGameFrame.num6(redSol).setText(Integer.toString(redSol));
+        ChessGameFrame.num7(redEle).setText(Integer.toString(redEle));
+
+        ChessGameFrame.num8(blaKin).setText(Integer.toString(blaKin));
+        ChessGameFrame.num9(blaCan).setText(Integer.toString(blaCan));
+        ChessGameFrame.num10(blaCha).setText(Integer.toString(blaCha));
+        ChessGameFrame.num11(blaHor).setText(Integer.toString(blaHor));
+        ChessGameFrame.num12(blaMan).setText(Integer.toString(blaMan));
+        ChessGameFrame.num13(blaSol).setText(Integer.toString(blaSol));
+        ChessGameFrame.num14(blaEle).setText(Integer.toString(blaEle));
         //判断输赢
         if (scoreOfBlack >= 60) {
             JOptionPane.showMessageDialog(this, "Black wins!");
@@ -211,6 +246,8 @@ public class Chessboard extends JComponent {
                 putChessOnBoard(squareComponent);
                 scoreOfBlack = 0;
                 scoreOfRed = 0;
+                redKin=0;redEle=0;redCan=0;redCha=0;redHor=0;redMan=0;redSol=0;
+                blaKin=0;blaEle=0;blaCan=0;blaCha=0;blaHor=0;blaMan=0;blaSol=0;
             }
         }
     }

@@ -3,6 +3,7 @@ package chessComponent;
 import controller.ClickController;
 import model.ChessColor;
 import model.ChessboardPoint;
+import view.Chessboard;
 
 import javax.swing.*;
 import java.awt.*;
